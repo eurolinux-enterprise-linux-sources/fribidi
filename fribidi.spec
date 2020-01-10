@@ -1,11 +1,12 @@
 Summary: Library implementing the Unicode Bidirectional Algorithm
 Name: fribidi
 Version: 1.0.2
-Release: 1%{?dist}
+Release: 1%{?dist}.1
 URL: https://github.com/fribidi/fribidi/
 Source: https://github.com//%{name}/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.bz2
 License: LGPLv2+ and UCD
 Group: System Environment/Libraries
+Patch1: %{name}-CVE-2019-18397.patch
 
 %description
 A library to handle bidirectional scripts (for example Hebrew, Arabic),
@@ -23,6 +24,7 @@ FriBidi.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %if 0%{?el5}
@@ -62,6 +64,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Dec 17 2019 Akira TAGOH <tagoh@redhat.com> - 1.0.2-1.1
+- Security fix for CVE-2019-18397
+  Resolves: rhbz#1781224
+
 * Fri May 04 2018 Caolán McNamara <caolanm@redhat.com> - 1.0.2-1
 - Resolves: rhbz#1574858 latest version, --disable-docs because there's no c2man
 
