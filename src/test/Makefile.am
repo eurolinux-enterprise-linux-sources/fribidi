@@ -1,5 +1,12 @@
 
-TESTS_ENVIRONMENT = /bin/sh
+SUBDIRS = unicode-conformance
+
+TESTS_ENVIRONMENT = \
+	srcdir=${srcdir}; export srcdir; \
+	top_builddir=${top_builddir}; export top_builddir; \
+	EXEEXT=${EXEEXT}; export EXEEXT;
+
+AM_TESTS_ENVIRONMENT = $(TESTS_ENVIRONMENT)
 
 TESTS = run.tests
 
@@ -22,7 +29,9 @@ EXTRA_DIST = \
 	$(TESTS) \
 	$(TEST_DATAS)
 
-test_%.reference: test_%.input
+SUFFIXES: .reference .input
+
+.reference.input:
 	testcase="$@" && \
 	charset="`echo "$@" | sed 's/_[^_]*$$//;s/.*_//'`" && \
 	$(top_builddir)/bin/fribidi --test --charset "$$charset" "$<" > "$@" \

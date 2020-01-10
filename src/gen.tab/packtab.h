@@ -13,14 +13,16 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License 
  * along with this library, in a file named COPYING; if not, write to the 
- * Free Software Foundation, Inc., 59 Temple Place, Suite 330, 
- * Boston, MA 02111-1307, USA  
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, 
+ * Boston, MA 02110-1301, USA  
  * 
- * For licensing issues, contact <fwpg@sharif.edu>. 
+ * For licensing issues, contact <fribidi.license@gmail.com>.
  */
 
 #ifndef PACKTAB_H
 #define PACKTAB_H
+
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C"

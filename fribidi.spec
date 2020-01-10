@@ -1,13 +1,11 @@
 Summary: Library implementing the Unicode Bidirectional Algorithm
 Name: fribidi
-Version: 0.19.4
-Release: 6%{?dist}
-URL: http://fribidi.org
-Source: http://fribidi.org/download/%{name}-%{version}.tar.bz2
+Version: 1.0.2
+Release: 1%{?dist}
+URL: https://github.com/fribidi/fribidi/
+Source: https://github.com//%{name}/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.bz2
 License: LGPLv2+ and UCD
 Group: System Environment/Libraries
-Patch0: signedwarning.patch
-Patch1: fribidi-aarch64.patch
 
 %description
 A library to handle bidirectional scripts (for example Hebrew, Arabic),
@@ -25,8 +23,6 @@ FriBidi.
 
 %prep
 %setup -q
-%patch0 -p1 -b .signedwarnings
-%patch1 -p1 -b .aarch64
 
 %build
 %if 0%{?el5}
@@ -41,14 +37,15 @@ export CFLAGS="$CFLAGS -DPAGE_SIZE=4096"
 export CFLAGS="$RPM_OPT_FLAGS -DPAGE_SIZE=4096"
 %endif
 %endif
-%configure --disable-static
+%configure --disable-static --disable-docs
 make %{?_smp_mflags}
+
+%check
+make check
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT install INSTALL="install -p"
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-# remove empty (compressed) man pages
-find $RPM_BUILD_ROOT%{_mandir}/man3 -type f -empty -exec rm {} \;
 
 %post -p /sbin/ldconfig
 
@@ -63,9 +60,11 @@ find $RPM_BUILD_ROOT%{_mandir}/man3 -type f -empty -exec rm {} \;
 %{_includedir}/fribidi
 %{_libdir}/libfribidi.so
 %{_libdir}/pkgconfig/*.pc
-%{_mandir}/man3/%{name}_*.gz
 
 %changelog
+* Fri May 04 2018 Caolán McNamara <caolanm@redhat.com> - 1.0.2-1
+- Resolves: rhbz#1574858 latest version, --disable-docs because there's no c2man
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 0.19.4-6
 - Mass rebuild 2014-01-24
 
