@@ -1,7 +1,7 @@
 Summary: Library implementing the Unicode Bidirectional Algorithm
 Name: fribidi
 Version: 0.19.4
-Release: 4%{?dist}
+Release: 6%{?dist}
 URL: http://fribidi.org
 Source: http://fribidi.org/download/%{name}-%{version}.tar.bz2
 License: LGPLv2+ and UCD
@@ -66,6 +66,12 @@ find $RPM_BUILD_ROOT%{_mandir}/man3 -type f -empty -exec rm {} \;
 %{_mandir}/man3/%{name}_*.gz
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 0.19.4-6
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 0.19.4-5
+- Mass rebuild 2013-12-27
+
 * Wed Apr 03 2013 Caolán McNamara <caolanm@redhat.com> - 0.19.4-4
 - Resolves: rhbz#925368 support aarch64
 
